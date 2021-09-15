@@ -1,7 +1,7 @@
 import nfl_data_py as nfl
 from pywebio.input import *
 from pywebio.session import set_env
-from pywebio.output import put_markdown, put_html
+from pywebio.output import put_markdown, put_html, put_column, put_row
 from pywebio.platform.tornado_http import start_server
 import base64
 import pandas as pd
@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup
 import argparse
 
 def app():
-    set_env(title="Gaskins vs Zeke")
+    set_env(title="Gaskin vs Zeke")
     put_markdown("<h2>Welcome, please enjoy the beautiful data visualization below</h2>")
 
     # Retrieve Year Data
@@ -25,11 +25,19 @@ def app():
     #print(zeke)
     total_stats =  pd.concat([gaskin, zeke], axis=0)
 
-    html = printBarChart(total_stats).to_html(include_plotlyjs="require", full_html=False)
-    put_html(html)
+    #Full Season Bar Graph (Totals)
+    full_season_bar = printBarChart(total_stats).to_html(include_plotlyjs="require", full_html=False)
+
+    #Full Season Line Graph (Weekly)
+    full_season_line = printLineChart(total_stats).to_html(include_plotlyjs="require", full_html=False)
+
+    put_html(full_season_bar)
+    put_html(full_season_line)
 
     put_markdown("Current Leader")
     put_html(getCurrentLeader(total_stats))
+    
+
 
 def getCurrentLeader(data):
     gaskin_yds = data['rushing_yards'].loc[data['player_name'] == 'M.Gaskin'].values[0]
@@ -51,6 +59,9 @@ def printBarChart(data):
     fig = px.bar(data, x='player_name', y='rushing_yards', color='player_name', title = "Total Rushing Yards 2021")
     return fig
 
+def printLineChart(data):
+    fig = px.line(data, x='week', y='rushing_yards', color ='player_name', markers=True, title = 'Weekly Rushing Yards 2021')
+    return fig
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("-p", "--port", type=int, default=8080)
