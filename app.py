@@ -1,7 +1,7 @@
 import nfl_data_py
 from pywebio.input import *
-from pywebio import *
-from pywebio.output import *
+from pywebio import set_env
+from pywebio.output import put_markdown, put_html
 from pywebio.platform.tornado_http import start_server
 import base64
 import pandas as pd
@@ -21,16 +21,16 @@ players = [{
 }]
 
 def app():
-    pywebio.session.set_env(title="Gaskins vs Zeke")
-    pywebio.output.put_markdown("<h2>Welcome, please enjoy the beautiful data visualization below</h2>")
+    set_env(title="Gaskins vs Zeke")
+    put_markdown("<h2>Welcome, please enjoy the beautiful data visualization below</h2>")
 
     html = printBarChart().to_html(include_plotlyjs="require", full_html=False)
-    pywebio.output.put_html(html)
+    put_html(html)
 
-    pywebio.output.put_markdown("Current Leader")
+    put_markdown("Current Leader")
     data_uri = base64.b64encode(open('gaskin.png', 'rb').read()).decode('utf-8')
     img_tag = '<img src="data:image/png;base64,{0}">'.format(data_uri)
-    pywebio.output.put_html(img_tag)
+    put_html(img_tag)
 
     #pywebio.output.put_html(BeautifulSoup(open('pay.html'), features='html.parser').get_text())
     #NFL-Data Blog
