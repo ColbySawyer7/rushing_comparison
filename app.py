@@ -2,7 +2,7 @@ import nfl_data_py
 from pywebio.input import *
 from pywebio import *
 from pywebio.output import *
-import pywebio
+from pywebio.platform.tornado_http import start_server
 import base64
 import pandas as pd
 import plotly.express as px
