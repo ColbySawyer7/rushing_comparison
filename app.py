@@ -1,6 +1,6 @@
 import nfl_data_py
 from pywebio.input import *
-from pywebio import set_env
+from pywebio.session import set_env
 from pywebio.output import put_markdown, put_html
 from pywebio.platform.tornado_http import start_server
 import base64
