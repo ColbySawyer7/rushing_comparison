@@ -37,17 +37,15 @@ def app():
     put_markdown("Current Leader")
     put_html(getCurrentLeader(total_stats))
     
-
-
 def getCurrentLeader(data):
     gaskin_yds = data['rushing_yards'].loc[data['player_name'] == 'M.Gaskin'].values[0]
     #print(gaskin_yds)
     zeke_yds = data['rushing_yards'].loc[data['player_name'] == 'E.Elliott'].values[0]
     #print(zeke_yds)
     if gaskin_yds > zeke_yds:
-        data_uri = base64.b64encode(open('gaskin.png', 'rb').read()).decode('utf-8')
+        data_uri = base64.b64encode(open('imgs/gaskin.png', 'rb').read()).decode('utf-8')
     else:
-        data_uri = base64.b64encode(open('zeke.png', 'rb').read()).decode('utf-8')
+        data_uri = base64.b64encode(open('imgs/zeke.png', 'rb').read()).decode('utf-8')
 
     img_tag = '<img src="data:image/png;base64,{0}">'.format(data_uri)
     return img_tag
@@ -62,6 +60,7 @@ def printBarChart(data):
 def printLineChart(data):
     fig = px.line(data, x='week', y='rushing_yards', color ='player_name', markers=True, title = 'Weekly Rushing Yards 2021')
     return fig
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("-p", "--port", type=int, default=8080)
