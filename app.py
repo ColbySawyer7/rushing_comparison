@@ -1,4 +1,4 @@
-import nfl_data_py
+import nfl_data_py as nfl
 from pywebio.input import *
 from pywebio.session import set_env
 from pywebio.output import put_markdown, put_html
@@ -32,13 +32,9 @@ def app():
     img_tag = '<img src="data:image/png;base64,{0}">'.format(data_uri)
     put_html(img_tag)
 
-    #pywebio.output.put_html(BeautifulSoup(open('pay.html'), features='html.parser').get_text())
-    #NFL-Data Blog
-    #df = pd.read_csv('https://raw.githubusercontent.com/ArrowheadAnalytics/next-gen-scrapy-2.0/master/pass_and_game_data.csv', index_col=0)
-    #Filter year
-    #df_2020 = df.loc[df['season'] == 2020]
-    #print(df_2020)
-    #Get Player Stats for 2020
+    df_2021 = nfl.import_weekly_data([2021], downcast=True)
+    print(df_2021)
+
 
 def printBarChart():
     data = pd.DataFrame(players)
