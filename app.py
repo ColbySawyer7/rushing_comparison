@@ -8,6 +8,7 @@ import pandas as pd
 import plotly.express as px
 import numpy as np
 from bs4 import BeautifulSoup
+import argparse
 
 players = [{
  'name': 'Myles Gaskin',
@@ -53,7 +54,11 @@ def getRushingStats(name) -> dict:
             print(name + ' had a yd per carry average of ' + str(rushing_yds/rushing_att))
 
 if __name__ == '__main__':
-    start_server(app, port=8081, debug=True)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-p", "--port", type=int, default=8080)
+    args = parser.parse_args()
+
+    start_server(main, port=args.port)
 
 
 
