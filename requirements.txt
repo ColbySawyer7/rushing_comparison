@@ -1,8 +1,7 @@
 pywebio
 nfl_data_py
 pandas
-seaborn
-matplotlib
 numpy
 bs4
 argparse
+plotly
