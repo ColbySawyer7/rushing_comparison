@@ -58,7 +58,7 @@ if __name__ == '__main__':
     parser.add_argument("-p", "--port", type=int, default=8080)
     args = parser.parse_args()
 
-    start_server(main, port=args.port)
+    start_server(app, port=args.port)
 
 
 
