@@ -38,7 +38,7 @@ def app():
     put_markdown("<h3>Current Leader<h3>")
     put_html(getCurrentLeader(total_stats))
 
-    available_weeks = total_stats['week'].value_counts(normalize=True)
+    available_weeks = list(set(total_stats['week'].tolist()))
     #print(available_weeks)
 
 
@@ -57,9 +57,9 @@ def app():
 
 
 def getCurrentLeader(data):
-    gaskin_yds = data['rushing_yards'].loc[data['player_name'] == 'M.Gaskin'].values[0]
+    gaskin_yds = sum(data['rushing_yards'].loc[data['player_name'] == 'M.Gaskin'])
     #print(gaskin_yds)
-    zeke_yds = data['rushing_yards'].loc[data['player_name'] == 'E.Elliott'].values[0]
+    zeke_yds = sum(data['rushing_yards'].loc[data['player_name'] == 'E.Elliott'])
     #print(zeke_yds)
     if gaskin_yds > zeke_yds:
         data_uri = base64.b64encode(open('imgs/gaskin.png', 'rb').read()).decode('utf-8')
